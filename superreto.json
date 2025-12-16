@@ -1,0 +1,74 @@
+{
+  "empleados": [
+    {
+      "id": 1,
+      "usuario": "jon",
+      "password": "aaa",
+      "nombre": "Jon",
+      "rol": "Coordinadora General",
+      "email": "jon@bintaeg.com",
+      "telefono": "+34 943 123 456",
+      "fechaIngreso": "2024-01-15"
+    },
+    {
+      "id": 2,
+      "usuario": "oscar",
+      "password": "Passw0rd",
+      "nombre": "Juan Méndez Ruiz",
+      "rol": "Evaluador de Prendas",
+      "email": "juan.mendez@bintaeg.com",
+      "telefono": "+34 943 234 567",
+      "fechaIngreso": "2024-02-01"
+    },
+    {
+      "id": 3,
+      "usuario": "natale",
+      "password": "Passw0rd",
+      "nombre": "Ana Fernández Castro",
+      "rol": "Gestora de Intercambios",
+      "email": "ana.fernandez@bintaeg.com",
+      "telefono": "+34 943 345 678",
+      "fechaIngreso": "2024-02-15"
+    },
+    {
+      "id": 4,
+      "usuario": "aroa",
+      "password": "Passw0rd",
+      "nombre": "Carlos López Martín",
+      "rol": "Responsable de Inventario",
+      "email": "carlos.lopez@bintaeg.com",
+      "telefono": "+34 943 456 789",
+      "fechaIngreso": "2024-03-01"
+    },
+    {
+      "id": 5,
+      "usuario": "ferdaus",
+      "password": "Passw0rd",
+      "nombre": "Laura Santos Jiménez",
+      "rol": "Atención al Cliente",
+      "email": "laura.santos@bintaeg.com",
+      "telefono": "+34 943 567 890",
+      "fechaIngreso": "2024-03-10"
+    },
+    {
+      "id": 6,
+      "usuario": "elene",
+      "password": "Passw0rd",
+      "nombre": "David Álvarez Pérez",
+      "rol": "Evaluador de Prendas",
+      "email": "david.alvarez@bintaeg.com",
+      "telefono": "+34 943 678 901",
+      "fechaIngreso": "2024-03-20"
+    },
+    {
+      "id": 7,
+      "usuario": "danel",
+      "password": "Passw0rd",
+      "nombre": "Sara Rodríguez Gómez",
+      "rol": "Coordinadora de Eventos",
+      "email": "sara.rodriguez@bintaeg.com",
+      "telefono": "+34 943 789 012",
+      "fechaIngreso": "2024-04-01"
+    }
+  ]
+}

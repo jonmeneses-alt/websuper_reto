@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BintAEG - Mercadillo de Intercambio</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --verde-principal: #2d5016;
+        --verde-claro: #6b9440;
+        --beige: #e8dcc4;
+        --blanco: #ffffff;
+        --gris-claro: #f5f5f5;
+        --texto-oscuro: #333;
+    }
+
+    #container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #arriba {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    #arriba img {
+        width: 200px;
+        height: 200px;
+        object-fit: contain;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    #titulo {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        justify-content: center;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: var(--texto-oscuro);
+        background-color: var(--blanco);
+    }
+
+    header {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, var(--verde-principal), var(--verde-claro));
+        color: var(--blanco);
+        padding: 2rem 0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 1px;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 300;
+        letter-spacing: 2px;
+    }
+
+    .tagline {
+        font-size: 1.1rem;
+        opacity: 0.9;
+        font-weight: 300;
+    }
+
+    nav {
+        background-color: var(--beige);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: var(--verde-principal);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+
+    nav a:hover, nav a.active {
+        color: var(--verde-claro);
+    }
+
+    .page {
+        display: none;
+        min-height: 70vh;
+    }
+
+    .page.active {
+        display: block;
+    }
+
+    .hero {
+        background: linear-gradient(to bottom, var(--gris-claro), var(--blanco));
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    .hero h2 {
+        color: var(--verde-principal);
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 300;
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        color: var(--texto-oscuro);
+        max-width: 700px;
+        margin: 0 auto 2rem;
+    }
+
+    .location-badge {
+        display: inline-block;
+        background-color: var(--verde-claro);
+        color: var(--blanco);
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        font-weight: 500;
+        margin-top: 1rem;
+    }
+
+    .section {
+        padding: 4rem 0;
+    }
+
+    .section-title {
+        text-align: center;
+        color: var(--verde-principal);
+        font-size: 2rem;
+        margin-bottom: 3rem;
+        font-weight: 300;
+        letter-spacing: 1px;
+    }
+
+    .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .card {
+        background: var(--blanco);
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 2px solid var(--beige);
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    .card h3 {
+        color: var(--verde-principal);
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+
+    .card p {
+        color: var(--texto-oscuro);
+        line-height: 1.8;
+    }
+
+    .card ul {
+        list-style: none;
+        margin-top: 1rem;
+    }
+
+    .card li {
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+
+    .card li:before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        color: var(--verde-claro);
+        font-weight: bold;
+    }
+
+    .product-example {
+        background: var(--gris-claro);
+        border-radius: 12px;
+        padding: 2rem;
+        border-left: 4px solid var(--verde-claro);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 2px solid var(--beige);
+    }
+
+    .product-example:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    .product-example h4 {
+        color: var(--verde-principal);
+        margin-bottom: 1.5rem;
+        font-size: 1.3rem;
+    }
+
+    .product-tag {
+        display: inline-block;
+        background: var(--verde-claro);
+        color: var(--blanco);
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        margin: 0.3rem;
+        font-size: 0.9rem;
+    }
+
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 0.8rem 0;
+    }
+
+    .status-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: var(--verde-claro);
+    }
+
+    .verified-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--verde-principal);
+        color: var(--blanco);
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-weight: 500;
+        margin-top: 1rem;
+    }
+
+    .coin-value {
+        font-size: 1.8rem;
+        color: var(--verde-principal);
+        font-weight: bold;
+        margin: 1rem 0;
+    }
+
+    .visual-identity {
+        background: linear-gradient(135deg, var(--beige), var(--gris-claro));
+        padding: 3rem;
+        border-radius: 12px;
+        margin-top: 2rem;
+    }
+
+    .color-palette {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .color-sample {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--blanco);
+        font-weight: 500;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .team-member {
+        text-align: center;
+        padding: 1.5rem;
+        background: var(--blanco);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 2px solid var(--beige);
+    }
+
+    .team-member:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    }
+
+    .team-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+        background: linear-gradient(135deg, var(--verde-claro), var(--verde-principal));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: var(--blanco);
+        border: 4px solid var(--beige);
+        overflow: hidden;
+    }
+
+    .team-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .team-member h3 {
+        color: var(--verde-principal);
+        margin-top: 1rem;
+        font-size: 1.2rem;
+    }
+
+    .mission-box {
+        background: var(--gris-claro);
+        padding: 2rem;
+        border-radius: 12px;
+        margin: 2rem 0;
+        border-left: 4px solid var(--verde-claro);
+    }
+
+    .mission-box h3 {
+        color: var(--verde-principal);
+        margin-bottom: 1rem;
+        font-size: 1.4rem;
+    }
+
+    .mission-box ul {
+        list-style: none;
+        margin-top: 1rem;
+    }
+
+    .mission-box li {
+        padding: 0.5rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+    }
+
+    .mission-box li:before {
+        content: "🌱";
+        position: absolute;
+        left: 0;
+    }
+
+    footer {
+        background-color: var(--verde-principal);
+        color: var(--blanco);
+        text-align: center;
+        padding: 2rem 0;
+        margin-top: 4rem;
+    }
+
+    .cta-button {
+        display: inline-block;
+        background-color: var(--verde-claro);
+        color: var(--blanco);
+        padding: 1rem 2.5rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: background-color 0.3s, transform 0.2s;
+        margin-top: 1rem;
+        cursor: pointer;
+        border: none;
+    }
+
+    .cta-button:hover {
+        background-color: var(--verde-principal);
+        transform: scale(1.05);
+    }
+
+    /* Estilos del Login */
+    .login-container {
+        max-width: 450px;
+        margin: 4rem auto;
+        background: var(--blanco);
+        padding: 3rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        border: 2px solid var(--beige);
+    }
+
+    .login-container h2 {
+        color: var(--verde-principal);
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        color: var(--verde-principal);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 2px solid var(--beige);
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: var(--verde-claro);
+    }
+
+    .login-button {
+        width: 100%;
+        background-color: var(--verde-claro);
+        color: var(--blanco);
+        padding: 1rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .login-button:hover {
+        background-color: var(--verde-principal);
+        transform: translateY(-2px);
+    }
+
+    .error-message {
+        background-color: #ffebee;
+        color: #c62828;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        display: none;
+        text-align: center;
+    }
+
+    .user-info {
+        display: none;
+        background: var(--verde-claro);
+        color: var(--blanco);
+        padding: 0.5rem 1.5rem;
+        border-radius: 25px;
+        margin-left: auto;
+    }
+
+    .logout-button {
+        background: var(--verde-principal);
+        color: var(--blanco);
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        margin-left: 1rem;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.3s;
+    }
+
+    .logout-button:hover {
+        background: var(--verde-claro);
+    }
+
+    .admin-dashboard {
+        background: var(--gris-claro);
+        padding: 2rem;
+        border-radius: 12px;
+        margin-top: 2rem;
+    }
+
+    .admin-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .stat-card {
+        background: var(--blanco);
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        color: var(--verde-principal);
+        font-weight: bold;
+    }
+
+    .stat-label {
+        color: var(--texto-oscuro);
+        margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2rem;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+        }
+
+        nav ul {
+            gap: 1rem;
+        }
+
+        .cards-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .team-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .login-container {
+            margin: 2rem 1rem;
+            padding: 2rem;
+        }
+    }
+</style>
+<body>
+    <header>
+        <div id="container">
+            <div id="arriba">
+                <img src="/bintagelogo.png" alt="BintAEG Logo">
+            </div>
+            <div id="titulo">
+                <h1>BintAEG</h1>
+                <h2>Save the planet trade BintAEG</h2>
+            </div>
+            <div class="user-info" id="userInfo">
+                <span id="userName"></span>
+                <button class="logout-button" onclick="logout()">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a class="nav-link active" data-page="inicio">Inicio</a></li>
+            <li><a class="nav-link" data-page="quienes-somos">Quiénes Somos</a></li>
+            <li><a class="nav-link" data-page="como-funciona">Cómo Funciona</a></li>
+            <li><a class="nav-link" data-page="servicios">Servicios</a></li>
+            <li><a class="nav-link" data-page="evaluacion">Sistema de Evaluación</a></li>
+            <li><a class="nav-link" data-page="contacto">Contacto</a></li>
+            <li><a class="nav-link" data-page="login" id="loginLink">Login Empleados</a></li>
+            <li><a class="nav-link" data-page="empleados" id="empleadosLink" style="display: none;">Área Empleados</a></li>
+        </ul>
+    </nav>
+
+    <div id="inicio" class="page active">
+        <section class="hero">
+            <div class="container">
+                <h2>Intercambia, Renueva, Sostenible</h2>
+                <p>Un mercadillo de ropa basado en fichas de intercambio. Trae tus prendas, obtén fichas y lléva te lo que necesites. Todo en persona, todo sostenible.</p>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2626.9581065810294!2d-1.9784184243614964!3d43.316704374130225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd51a55967ee9337%3A0xee78c31e1e9100c!2sTabakalera!5e1!3m2!1ses!2ses!4v1765800535542!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <br>
+                <a class="cta-button nav-link" data-page="como-funciona">Descubre Cómo Funciona</a>
+            </div>
+        </section>
+    </div>
+
+    <div id="quienes-somos" class="page">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Quiénes Somos</h2>
+                
+                <div style="max-width: 900px; margin: 0 auto;">
+                    <p style="font-size: 1.1rem; text-align: center; margin-bottom: 2rem; line-height: 1.8;">
+                        Somos un grupo de estudiantes de Formación Profesional unidos por la música euskalduna y la pasión por la sostenibilidad. Nos conocimos en Tabakalera a través de una dinámica de puzzle donde cada uno tenía una pieza, y al juntarlas todas, descubrimos que compartíamos más que un curso: compartíamos valores y el deseo de hacer un cambio positivo en nuestra comunidad.
+                    </p>
+
+                    <div class="mission-box">
+                        <h3>Nuestra Misión</h3>
+                        <p>Darle una segunda vida a la ropa que la gente ya no utiliza, fomentando el reciclaje y evitando el consumo excesivo. A través de nuestros mercadillos de intercambio, buscamos:</p>
+                        <ul>
+                            <li>Reducir residuos textiles y dar una segunda oportunidad a cada prenda</li>
+                            <li>Ayudar a las personas a ahorrar dinero y aprovechar mejor los recursos</li>
+                            <li>Fortalecer la comunidad y las relaciones sociales</li>
+                            <li>Impulsar la creatividad y el estilo personal de cada quien</li>
+                            <li>Romper barreras sociales a través de la participación comunitaria</li>
+                        </ul>
+                    </div>
+
+                    <p style="font-size: 1.1rem; text-align: center; margin: 2rem 0; line-height: 1.8;">
+                        Después de compartir y debatir muchas ideas, nos decantamos por crear BintAEG, un mercadillo de intercambio de ropa basado en un sistema de fichas justo y transparente. Cada decisión que tomamos está guiada por las necesidades reales que hemos detectado en nuestra comunidad.
+                    </p>
+
+                    <h3 style="color: var(--verde-principal); text-align: center; margin: 3rem 0 2rem; font-size: 1.8rem;">Nuestro Equipo</h3>
+                    
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="team-photo">👤</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="como-funciona" class="page">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">¿Cómo Funciona?</h2>
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>1. Trae tus prendas</h3>
+                        <p>Acércate a Tabakalera con la ropa que ya no uses. Nuestro equipo evaluará cada prenda según su estado, calidad y marca.</p>
+                    </div>
+                    <div class="card">
+                        <h3>2. Recibe tus fichas</h3>
+                        <p>Cada prenda recibe un valor en fichas de intercambio basado en nuestro algoritmo de evaluación justo y transparente.</p>
+                    </div>
+                    <div class="card">
+                        <h3>3. Elige tus nuevas prendas</h3>
+                        <p>Explora el mercadillo y usa tus fichas para llevarte las prendas que te gusten. ¡Moda circular en acción!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="servicios" class="page">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Nuestros Servicios</h2>
+                
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Clasificación de Prendas</h3>
+                        <p>Todas las prendas están organizadas por:</p>
+                        <ul>
+                            <li>Marca</li>
+                            <li>Talla</li>
+                            <li>Estado de la prenda</li>
+                            <li>Tipo de prenda</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>Sistema de Evaluación</h3>
+                        <p>Algoritmo inteligente que considera:</p>
+                        <ul>
+                            <li>Estado físico</li>
+                            <li>Calidad del material</li>
+                            <li>Tipo de material</li>
+                            <li>Valor de marca</li>
+                            <li>Demanda del producto</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>Etiquetado Digital</h3>
+                        <p>Cada prenda incluye:</p>
+                        <ul>
+                            <li>Valor en fichas</li>
+                            <li>Nivel de estado con iconos</li>
+                            <li>Sello de verificación</li>
+                            <li>Información detallada</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--verde-principal); text-align: center; margin: 3rem 0 2rem; font-size: 1.8rem;">Ejemplos de Etiquetas de Prendas</h3>
+                
+                <div class="cards-grid">
+                    <div class="product-example">
+                        <h4>Camisa de lino</h4>
+                        <div>
+                            <strong>Marca: Zara</strong>
+                            <div class="coin-value">💰 15 fichas</div>
+                            
+                            <div class="status-indicator">
+                                <div class="status-dot"></div>
+                                <span><strong>Estado:</strong> Muy Buen Estado</span>
+                            </div>
+                            
+                            <div>
+                                <span class="product-tag">Talla M</span>
+                                <span class="product-tag">Lino 100%</span>
+                                <span class="product-tag">Camisas</span>
+                            </div>
+                            
+                            <div class="verified-badge">
+                                ✓ Prenda Verificada
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-example">
+                        <h4>Vaqueros vintage</h4>
+                        <div>
+                            <strong>Marca: Levi's</strong>
+                            <div class="coin-value">💰 25 fichas</div>
+                            
+                            <div class="status-indicator">
+                                <div class="status-dot"></div>
+                                <span><strong>Estado:</strong> Buen Estado</span>
+                            </div>
+                            
+                            <div>
+                                <span class="product-tag">Talla 32</span>
+                                <span class="product-tag">Denim 98%</span>
+                                <span class="product-tag">Pantalones</span>
+                            </div>
+                            
+                            <div class="verified-badge">
+                                ✓ Prenda Verificada
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-example">
+                        <h4>Chaqueta de cuero</h4>
+                        <div>
+                            <strong>Marca: Mango</strong>
+                            <div class="coin-value">💰 35 fichas</div>
+                            
+                            <div class="status-indicator">
+                                <div class="status-dot"></div>
+                                <span><strong>Estado:</strong> Nuevo</span>
+                            </div>
+                            
+                            <div>
+                                <span class="product-tag">Talla L</span>
+                                <span class="product-tag">Cuero sintético</span>
+                                <span class="product-tag">Chaquetas</span>
+                            </div>
+                            
+                            <div class="verified-badge">
+                                ✓ Prenda Verificada
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="evaluacion" class="page">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Sistema de Evaluación de Calidad</h2>
+                
+                <div class="cards-grid">
+                    <div class="card">
+                        <h3>Estados de las Prendas</h3>
+                        <ul>
+                            <li><strong>Nuevo:</strong> Sin uso, con etiquetas</li>
+                            <li><strong>Muy Buen Estado:</strong> Usado mínimamente</li>
+                            <li><strong>Buen Estado:</strong> Uso normal, sin defectos</li>
+                            <li><strong>Usado:</strong> Señales de uso, funcional</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>Factores de Valoración</h3>
+                        <ul>
+                            <li>Calidad de las costuras</li>
+                            <li>Composición del tejido</li>
+                            <li>Reputación de la marca</li>
+                            <li>Tendencia y demanda actual</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h3>Proceso Transparente</h3>
+                        <ul>
+                            <li>Evaluación presencial</li>
+                            <li>Explicación del valor asignado</li>
+                            <li>Criterios claros y públicos</li>
+                            <li>Trato justo garantizado</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="visual-identity">
+                    <h3 style="color: var(--verde-principal); margin-bottom: 1rem;">Identidad Visual</h3>
+                    <p style="margin-bottom: 1.5rem;">Diseño moderno, limpio y minimalista que refleja nuestros valores de sostenibilidad.</p>
+                    
+                    <h4 style="color: var(--verde-principal); margin-bottom: 1rem;">Paleta de Colores</h4>
+                    <div class="color-palette">
+                        <div class="color-sample" style="background-color: #2d5016;">Verde Oscuro</div>
+                        <div class="color-sample" style="background-color: #6b9440;">Verde Claro</div>
+                        <div class="color-sample" style="background-color: #e8dcc4; color: #333;">Beige</div>
+                        <div class="color-sample" style="background-color: #ffffff; color: #333; border: 2px solid #ddd;">Blanco</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="contacto" class="page">
+        <section class="section" style="background-color: var(--gris-claro); min-height: 70vh; display: flex; align-items: center;">
+            <div class="container">
+                <h2 class="section-title">Visítanos</h2>
+                <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+                    <p style="font-size: 1.2rem; margin-bottom: 2rem;">Ven a Tabakalera y forma parte del cambio hacia una moda más sostenible.</p>
+                    <div style="background: var(--blanco); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+                        <h3 style="color: var(--verde-principal); margin-bottom: 1rem;">📍 Ubicación</h3>
+                        <p><strong>Tabakalera</strong><br>
+                        Centro Internacional de Cultura Contemporánea<br>
+                        Donostia / San Sebastián</p>
+                    </div>
+                    <a class="cta-button nav-link" data-page="inicio">Volver al Inicio</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Página de Login -->
+    <div id="login" class="page">
+        <section class="section">
+            <div class="login-container">
+                <h2>Login Empleados</h2>
+                <div class="error-message" id="errorMessage">Usuario o contraseña incorrectos</div>
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" placeholder="Ingrese su usuario">
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" id="password" placeholder="Ingrese su contraseña">
+                </div>
+                <button class="login-button" onclick="handleLogin()">Iniciar Sesión</button>
+                <p style="text-align: center; margin-top: 2rem; color: var(--texto-oscuro);">
+                    <small>Solo para personal autorizado de BintAEG</small>
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Área de Empleados -->
+    <div id="empleados" class="page">
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Área de Empleados</h2>
+                
+                <div class="admin-dashboard">
+                    <h3 style="color: var(--verde-principal); margin-bottom: 1rem;">Bienvenido/a, <span id="empleadoNombre"></span></h3>
+                    <p style="margin-bottom: 2rem;"><strong>Rol:</strong> <span id="empleadoRol"></span></p>
+                    
+                    <h4 style="color: var(--verde-principal); margin-bottom: 1rem;">📊 Estadísticas del Día</h4>
+                    <div class="admin-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">47</div>
+                            <div class="stat-label">Prendas Evaluadas</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">23</div>
+                            <div class="stat-label">Intercambios Realizados</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">1,240</div>
+                            <div class="stat-label">Fichas en Circulación</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">89</div>
+                            <div class="stat-label">Prendas Disponibles</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cards-grid" style="margin-top: 3rem;">
+                    <div class="card">
+                        <h3>📝 Evaluar Prendas</h3>
+                        <p>Registra nuevas prendas y asigna su valor en fichas según el sistema de evaluación.</p>
+                        <button class="cta-button" style="margin-top: 1rem;">Evaluar Prenda</button>
+                    </div>
+                    <div class="card">
+                        <h3>🔄 Gestionar Intercambios</h3>
+                        <p>Procesa intercambios de fichas por prendas y mantén el registro actualizado.</p>
+                        <button class="cta-button" style="margin-top: 1rem;">Nuevo Intercambio</button>
+                    </div>
+                    <div class="card">
+                        <h3>📦 Inventario</h3>
+                        <p>Consulta y administra el inventario completo de prendas disponibles.</p>
+                        <button class="cta-button" style="margin-top: 1rem;">Ver Inventario</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 BintAEG - Mercadillo de Intercambio Sostenible</p>
+            <p style="margin-top: 0.5rem; opacity: 0.8;">Moda circular para un futuro mejor 🌍</p>
+        </div>
+    </footer>
+
+    <script>
+        // Base de datos de empleados (simulando el archivo JSON)
+        const empleadosDB = [
+            {
+                "id": 1,
+                "usuario": "jon",
+                "password": "aaa",
+                "nombre": "Jon Meneses",
+                "rol": "Coordinador General",
+                "email": "jon.meneses@bintaeg.com"
+            },
+            {
+                "id": 2,
+                "usuario": "oscar",
+                "password": "aaa",
+                "nombre": "Oscar Soblechero",
+                "rol": "Evaluador de Prendas",
+                "email": "oscar.soblechero@bintaeg.com"
+            },
+            {
+                "id": 3,
+                "usuario": "natale",
+                "password": "aaa",
+                "nombre": "Natale Reyes",
+                "rol": "Gestora de Intercambios",
+                "email": "natale.reyes@bintaeg.com"
+            },
+            {
+                "id": 4,
+                "usuario": "aroa",
+                "password": "aaa",
+                "nombre": "Aroa Jauregui",
+                "rol": "Responsable de Inventario",
+                "email": "aroa.jauregui@bintaeg.com"
+            },
+            {
+                "id": 5,
+                "usuario": "elene",
+                "password": "aaa",
+                "nombre": "Elene Ochoa",
+                "rol": "Atención al Cliente",
+                "email": "elene.ochoa@bintaeg.com"
+            },
+            {
+                "id": 6,
+                "usuario": "fardaus",
+                "password": "aaa",
+                "nombre": "Ferdaus Ben",
+                "rol": "Evaluador de Prendas",
+                "email": "ferdaus.ben@bintaeg.com"
+            },
+            {
+                "id": 7,
+                "usuario": "danel",
+                "password": "aaa",
+                "nombre": "Danel Rubio",
+                "rol": "Coordinadora de Eventos",
+                "email": "danel.rubio@bintaeg.com"
+            }
+        ];
+
+        // Verificar sesión al cargar la página
+        window.addEventListener('DOMContentLoaded', function() {
+            checkSession();
+        });
+
+        // Función para manejar el login
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Buscar usuario en la base de datos
+            const usuario = empleadosDB.find(emp => 
+                emp.usuario === username && emp.password === password
+            );
+
+            if (usuario) {
+                // Guardar sesión (usando variables en memoria, no localStorage)
+                window.currentUser = usuario;
+                errorMessage.style.display = 'none';
+                
+                // Actualizar UI
+                updateUserInterface(usuario);
+                
+                // Navegar al área de empleados
+                navigateToPage('empleados');
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // Función para cerrar sesión
+        function logout() {
+            window.currentUser = null;
+            document.getElementById('userInfo').style.display = 'none';
+            document.getElementById('loginLink').style.display = 'block';
+            document.getElementById('empleadosLink').style.display = 'none';
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            navigateToPage('inicio');
+        }
+
+        // Verificar si hay sesión activa
+        function checkSession() {
+            if (window.currentUser) {
+                updateUserInterface(window.currentUser);
+            }
+        }
+
+        // Actualizar interfaz con datos del usuario
+        function updateUserInterface(usuario) {
+            document.getElementById('userName').textContent = usuario.nombre;
+            document.getElementById('empleadoNombre').textContent = usuario.nombre;
+            document.getElementById('empleadoRol').textContent = usuario.rol;
+            document.getElementById('userInfo').style.display = 'flex';
+            document.getElementById('loginLink').style.display = 'none';
+            document.getElementById('empleadosLink').style.display = 'block';
+        }
+
+        // Navegar a una página
+        function navigateToPage(pageName) {
+            const pages = document.querySelectorAll('.page');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            document.getElementById(pageName).classList.add('active');
+            
+            const activeLink = document.querySelector(`[data-page="${pageName}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Navegación
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    // Si intenta acceder al área de empleados sin estar logueado
+                    if (targetPage === 'empleados' && !window.currentUser) {
+                        navigateToPage('login');
+                        return;
+                    }
+                    
+                    navigateToPage(targetPage);
+                });
+            });
+
+            // Permitir login con Enter
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    handleLogin();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
